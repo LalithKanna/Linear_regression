@@ -18,6 +18,7 @@ class LinearRegression:
         self.mae=self.Mean_absolute_error()
         self.mse=self.Mean_squared_error()
         self.rmse=self.Root_mean_squared_error()
+        self.model_performance=self.rate_model()
     def calc_Xy(self):
         Xy=[]
         for i in range(self.n):
@@ -94,6 +95,15 @@ class LinearRegression:
     def Root_mean_squared_error(self):
         rmse=self.mse**0.5
         return rmse
+    def rate_model(self):
+        if self.R_s>0.9 and self.mae<3 and self.mse<25 and self.rmse<5:
+            return "Excellent Model"
+        elif self.R_s>0.70 and self.R_s<0.90 and self.mae<10 and self.rmse<15 and self.mse<225:
+            return "Good model"
+        elif self.R_s>0.50 and self.R_s<0.70 and self.mae<20 and self.rmse<30 and self.mse<900:
+            return "Average model"
+        else:
+            return "Poor model"
     def PrintMainDetails(self):
         print("slope:",self.slope)
         print("intercept:",self.intercept)
@@ -102,6 +112,8 @@ class LinearRegression:
         print("Mean_absolute_error:",self.mae)
         print("Mean_squared_error:",self.mse)
         print("Root_mean_squared_error:",self.rmse)
+        print("Model performance:",self.model_performance)
+        
 class Predict:
     def __init__(self,model,new_X):
         self.slope=model.slope
@@ -132,5 +144,3 @@ if __name__=="__main__":
     Regression.PrintMainDetails()
     Predict_data=Predict(Regression,new_X)
     print("Y_predicted_values:",Predict_data.Y)
-    
-    
